@@ -8,7 +8,7 @@
 """
 
 
-from config2 import RPCaddress, ROUTE, PRIVATE_FOR, ABI
+from config20 import RPCaddress, ROUTE, PRIVATE_FOR, ABI
 
 ################
 ## Dependencies:
@@ -73,7 +73,8 @@ def contract_set_via_web3(contract, arg, privateFor=PRIVATE_FOR, gas=90000):
         
     # pprint (txParameters)
     print("arg 0 ",arg);    
-    tx = contract.functions.createPO( _poId=arg[0],_data=arg[1] ).transact(txParameters)
+    #tx = contract.functions.createPO( _poId=arg[0],_data=arg[1] ).transact(txParameters)
+    tx = contract.functions.transfer( to=arg[0],value=arg[1] ).transact(txParameters)
     print ("[sent via web3]", end=" ")
     tx = w3.toHex(tx)
     return tx
@@ -205,7 +206,7 @@ def many_transactions(contract, howMany):
     print ("send %d transactions, non-async, one after the other:\n" % (howMany))
 
     for i in range(howMany):
-        tx = contract_set(contract, [i,"name"])
+        tx = contract_set(contract, [w3.toChecksumAddress("0x2b2de645d65730b1d3042fd0d825d4cd03e3dc72"),1000000000])
         print ("set() transaction submitted: ", tx) # Web3.toHex(tx)) # new web3
 
 
@@ -219,7 +220,7 @@ def benchmark():
 
     print("\nBlockNumber = ", w3.eth.blockNumber)
     
-    many_transactions(contract,500)
+    many_transactions(contract,1000)
 
 
 if __name__ == '__main__':
@@ -233,7 +234,7 @@ if __name__ == '__main__':
 # inject the poa compatibility middleware to the innermost layer
     w3.middleware_stack.inject(geth_poa_middleware, layer=0)
  
-    addresses = ["0xe15391099b5b0e08641118220e1248f8c10fe918"]
+    addresses = ["0xa0d03306e9945c6c7118a9270abc3d26f6bde998"]
     for addr in addresses:
         contract = initialize(1,0,addr)
         benchmark()

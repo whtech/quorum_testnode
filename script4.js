@@ -21,3 +21,4 @@ var simple = simpleContract.new({from:web3.eth.accounts[0], data: bytecode, gas:
 		}
 	}
 });
+

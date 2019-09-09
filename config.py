@@ -12,7 +12,7 @@
 
 
 # 22000 = node 1 of the 7nodes quorum example
-RPCaddress='http://172.24.162.51:22003'
+RPCaddress='http://172.24.162.54:22000'
 
 ## submit transaction via web3 or directly via RPC
 ROUTE = "web3"  # "web3" "RPC" 
